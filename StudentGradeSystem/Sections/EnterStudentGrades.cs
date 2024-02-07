@@ -8,26 +8,38 @@ namespace StudentGradeSystem.Sections
         public override void View(State state)
         {
             Console.Clear();
+            int count = 0;
             if (state.Students.Count == 0)
             {
                 Println("Students not found!");
                 SetState(state);
-                PushSectionMenu(Menu.MenuSection);
+                PushSection(Menu.MenuSection);
             }
             else
             {
                 Println("Enter Student Grades\n");
                 foreach (var student in state.Students)
                 {
+                    count++;
+                    Println($"Student: {student.Name}");
                     foreach (Subject subj in Enum.GetValues(typeof(Subject)))
                     {
-                        Println(subj);
+                        Print($"Enter grade for {subj}: ");
+                        int grade = Convert.ToInt32(Console.ReadLine());
+                        student.StudentGrades.Add(new StudentGrade(student, subj, grade));
                     }
 
+                    SetState(state);
+                    if (!IsEnterAgain()) break;
                 }
             }
+            Console.Clear();
+            if (count == state.Students.Count)
+            {
+                Println("All done!");
+            }
 
-
+            PushSection(Menu.MenuSection);
         }
     }
 }

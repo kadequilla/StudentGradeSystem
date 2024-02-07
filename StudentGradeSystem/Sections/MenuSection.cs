@@ -7,13 +7,11 @@ namespace StudentGradeSystem.Sections
 
         public override void View(State state)
         {
-            Console.Clear();
             if (state.TotalStudentCount is null)
             {
                 Console.Write("Enter total students: ");
                 state.TotalStudentCount = InputInteger("Enter total students: ", int.MaxValue);
             }
-
 
             Println("\n" +
                 "Welcome to the Student Grades System!\r\n" +
@@ -24,23 +22,21 @@ namespace StudentGradeSystem.Sections
                 "[5] Exit");
 
             Print("Enter Choice: ");
+
             state.MenuId = InputInteger("Enter choice: ", 5);
 
-
             SetState(state);
-            PushSectionBySelectedMenu();
+            PushSection();
         }
 
-        private int InputInteger(string text, int max)
+        private static int InputInteger(string text, int max)
         {
             int num;
-            while (!int.TryParse(Console.ReadLine(), out num) || num > max)
+            while (!int.TryParse(Console.ReadLine(), out num) || num > max || num is 0)
             {
                 Print(text);
             }
             return num;
         }
-
-
     }
 }

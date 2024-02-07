@@ -18,21 +18,22 @@ namespace StudentGradeSystem.Sections
                 numStudent++;
                 if (numStudent > state.TotalStudentCount)
                 {
+                    Console.Clear();
                     Println("Error: Cannot exceed total number of students!");
-                    isContinue = false;
+                    SetState(state);
                     PushSection(Menu.MenuSection);
+                    break;
                 }
                 else
                 {
                     Print("Enter student name: ");
                     string name = Console.ReadLine()!;
-
                     state.Students.Add(new Student(numStudent, name));
-
                     isContinue = IsEnterAgain();
                 }
             }
 
+            Console.Clear();
             SetState(state);
             PushSection(Menu.MenuSection);
         }
