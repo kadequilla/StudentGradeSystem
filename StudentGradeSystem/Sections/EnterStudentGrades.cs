@@ -25,7 +25,13 @@ namespace StudentGradeSystem.Sections
                     foreach (Subject subj in Enum.GetValues(typeof(Subject)))
                     {
                         Print($"Enter grade for {subj}: ");
-                        int grade = Convert.ToInt32(Console.ReadLine());
+                        int grade = 0;
+
+                        while (!int.TryParse(Console.ReadLine(), out grade))
+                        {
+                            Print($"Enter grade for {subj}: ");
+                        }
+
                         student.StudentGrades.Add(new StudentGrade(student, subj, grade));
                     }
 
