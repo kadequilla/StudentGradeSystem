@@ -5,12 +5,12 @@ namespace StudentGradeSystem.Sections
 {
     internal abstract class SectionBase
     {
-
-        public State state = new();
+        private State _state = new();
         public abstract void View(State state);
 
-        public const string STRING_ENTER_AGAIN = "Enter Again[Y/N]:";
-        public enum Menu
+        private const string StringEnterAgain = "Enter Again[Y/N]:";
+
+        protected enum Menu
         {
             MenuSection,
             Enroll,
@@ -19,110 +19,104 @@ namespace StudentGradeSystem.Sections
             ViewTop
         }
 
-        public void SetState(State newState)
+        protected void SetState(State newState)
         {
-            state = newState;
+            _state = newState;
         }
 
 
-        public void PushSection()
+        protected void PushSection()
         {
-            if (state.MenuId == 1)
+            if (_state.MenuId == 1)
             {
-                new EnrollStudent().View(state);
+                new EnrollStudent().View(_state);
             }
-            else if (state.MenuId == 2)
+            else if (_state.MenuId == 2)
             {
-                new EnterStudentGrades().View(state);
+                new EnterStudentGrades().View(_state);
             }
-            else if (state.MenuId == 3)
+            else if (_state.MenuId == 3)
             {
-                new ShowStudentGrades().View(state);
+                new ShowStudentGrades().View(_state);
             }
-            else if (state.MenuId == 4)
+            else if (_state.MenuId == 4)
             {
-                new ShowTopStudent().View(state);
+                new ShowTopStudent().View(_state);
             }
-
-
         }
 
-        public void PushSection(Menu menu)
+        protected void PushSection(Menu menu)
         {
-
             if (menu == Menu.MenuSection)
             {
-                new MenuSection().View(state);
+                new MenuSection().View(_state);
             }
             else if (menu == Menu.Enroll)
             {
-                new EnrollStudent().View(state);
+                new EnrollStudent().View(_state);
             }
             else if (menu == Menu.CreateGrade)
             {
-                new EnterStudentGrades().View(state);
+                new EnterStudentGrades().View(_state);
             }
             else if (menu == Menu.ViewGrades)
             {
-                new ShowStudentGrades().View(state);
+                new ShowStudentGrades().View(_state);
             }
             else if (menu == Menu.ViewTop)
             {
-                new ShowTopStudent().View(state);
+                new ShowTopStudent().View(_state);
             }
         }
 
-        public static bool IsEnterAgain()
+        protected static bool IsEnterAgain()
         {
-            Console.WriteLine(STRING_ENTER_AGAIN);
+            Console.WriteLine(StringEnterAgain);
             string again = Console.ReadLine()!;
             while (again != "n" && again != "y")
             {
-                Console.WriteLine(STRING_ENTER_AGAIN);
+                Console.WriteLine(StringEnterAgain);
                 again = Console.ReadLine()!;
             }
 
             return !(again.Equals("n", StringComparison.CurrentCultureIgnoreCase));
         }
 
-        public List<StudentGrade> StudentGrades = [];
-        public int GetGradeBySubj(Subject subject)
+        protected List<StudentGrade> StudentGrades = [];
+
+        protected int GetGradeBySubj(Subject subject)
         {
-            StudentGrade? studentGrade = StudentGrades.FirstOrDefault(val => val.Subject == subject);
-            return studentGrade == null ? 0 : studentGrade.Grade;
+            var studentGrade = StudentGrades.FirstOrDefault(val => val.Subject == subject);
+            return studentGrade?.Grade ?? 0;
         }
 
-        public static void Print(dynamic s)
-        {
-            Console.Write(s);
-        }
+        protected static void Print(dynamic s) => Console.Write(s);
 
-        public static void Println(dynamic s)
-        {
-            Console.WriteLine(s);
-        }
+        protected static void Println(dynamic s) => Console.WriteLine(s);
 
-        public static string Space(string s)
+        protected static string Space(string s)
         {
-            string res = "";
-            for (int i = 0; i <= 20 - (s.Length); i++)
+            var res = "";
+            for (var i = 0; i <= 20 - (s.Length); i++)
             {
                 res += " ";
             }
+
             return res;
         }
 
-        public static string Space(int g)
+        protected static string Space(int g)
         {
             string res = "";
             for (int i = 0; i <= 20 - (g.ToString().Length); i++)
             {
                 res += " ";
             }
+
             return res;
         }
 
-        public static double GetAve(int[] grades)
+        protected static double GetAve(int[] grades)
         {
             double sum = 0;
             foreach (var g in grades)
@@ -138,7 +132,5 @@ namespace StudentGradeSystem.Sections
             Print("\n\nPress [0] to go back menu and press any key to exit: ");
             return Console.ReadLine() == "0";
         }
-
-
     }
 }

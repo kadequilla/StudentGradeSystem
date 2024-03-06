@@ -5,11 +5,10 @@ namespace StudentGradeSystem.Sections
 {
     internal class EnrollStudent : SectionBase
     {
-
         public override void View(State state)
         {
-            int numStudent = 0;
-            bool isContinue = true;
+            var numStudent = 0;
+            var isContinue = true;
 
             Console.Clear();
             Println("\nEnroll Student");
@@ -27,7 +26,7 @@ namespace StudentGradeSystem.Sections
                 else
                 {
                     Print("Enter student name: ");
-                    string name = Console.ReadLine()!;
+                    var name = Console.ReadLine()!;
                     state.Students.Add(new Student(numStudent, name));
                     isContinue = IsEnterAgain();
                 }

@@ -8,7 +8,7 @@ namespace StudentGradeSystem.Sections
         public override void View(State state)
         {
             Console.Clear();
-            int count = 0;
+            var count = 0;
             if (state.Students.Count == 0)
             {
                 Println("Students not found!");
@@ -25,7 +25,7 @@ namespace StudentGradeSystem.Sections
                     foreach (Subject subj in Enum.GetValues(typeof(Subject)))
                     {
                         Print($"Enter grade for {subj}: ");
-                        int grade = 0;
+                        var grade = 0;
 
                         while (!int.TryParse(Console.ReadLine(), out grade))
                         {
@@ -39,6 +39,7 @@ namespace StudentGradeSystem.Sections
                     if (!IsEnterAgain()) break;
                 }
             }
+
             Console.Clear();
             if (count == state.Students.Count)
             {
